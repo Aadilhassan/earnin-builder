@@ -225,16 +225,21 @@ editor.Commands.add('export-template', (editor, sender) => {
 
  return (
 
-  
-    isLoading ?   <div className="flex items-center align-middle justify-center w-[100vw] h-[100vh]">
-      <BeatLoader color="#36d7b7" size={48} />
-      </div>  :
+  <>
+
+  {
+  isLoading &&  <div className="flex items-center align-middle justify-center w-[100vw] h-[100vh]">
+  <BeatLoader color="#36d7b7" size={48} />
+  </div> 
+  }
+   
   
 
    <div id="gjs">
 
     
    </div>
+   </>
  );
 }
 export default WebBuilder;
