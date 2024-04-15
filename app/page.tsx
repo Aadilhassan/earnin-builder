@@ -42,7 +42,19 @@ function WebBuilder() {
   ]).then(([html, css]) => {
     const editor =  grapesjs.init({
           container: '#gjs',
-          components: html,
+          components:  `
+          <div class="container">
+            <header>
+              <h1>Welcome to My Website</h1>
+            </header>
+            <main>
+              <p>This is a sample paragraph.</p>
+            </main>
+            <footer>
+              <p>Copyright &copy; 2022</p>
+            </footer>
+          </div>
+        `,
     
           style: css,
           height: '700px',
@@ -63,6 +75,7 @@ function WebBuilder() {
             // 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js',
             'https://cdn.skypack.dev/grapesjs-blocks-bootstrap5'
           ],
+          
         },
           storageManager: {
             id: 'gjs-',
@@ -110,13 +123,22 @@ function WebBuilder() {
           el: '.panel__right',
         });
     
+        let htm = 
+        `
+        
+        <h1> Hell World</h1>
+        
+        `
+
+        editor.setComponents(html, { avoidInlineStyle: 1 });
+        editor.setStyle(css);
      
 editor.Panels.addButton('options', {
   id: 'download-html',
   className: 'fa fa-download',
   command: 'export-template',
   attributes: {  },
-  label: 'Export HTML',
+  label: '',
 tagName: 'span',
   context: 'null',
   buttons: [],
@@ -133,13 +155,28 @@ tagName: 'span',
      
 editor.Commands.add('export-template', (editor, sender) => {
   sender && sender.set('active', false);
-  const html = editor.getHtml();
+  let html = editor.getHtml();
   const css = editor.getCss();
   const zip = new JSZip();
-  zip.file('template.html', html);
-if (typeof css === 'string') {
-  zip.file('style.css', css);
-}
+
+  // Add the <html> tag, import the CSS file, and add the Tailwind CSS link
+  html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css">
+    </head>
+    <body>
+      ${html}
+    </body>
+    </html>
+  `;
+
+  zip.file('index.html', html);
+  if (typeof css === 'string') {
+    zip.file('style.css', css);
+  }
 
   zip.generateAsync({ type: 'blob' })
     .then(function(blob) {
