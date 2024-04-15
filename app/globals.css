@@ -31,3 +31,15 @@ body {
     text-wrap: balance;
   }
 }
+
+
+
+/* Change the background color of the panels */
+.gjs-pn-panels {
+  background-color: #000;
+}
+
+/* Change the color of the buttons */
+.gjs-pn-btn {
+  color: #fff;
+}
