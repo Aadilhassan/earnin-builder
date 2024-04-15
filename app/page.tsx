@@ -10,6 +10,7 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
 import pluginTailwind from 'grapesjs-tailwind';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 
 //npm i grapesjs-blocks-bootstrap4
@@ -25,6 +26,8 @@ function WebBuilder() {
 
 
 
+  let [isLoading, setIsLoading] = useState(true);
+
   
  useEffect(() => {
 
@@ -36,10 +39,18 @@ function WebBuilder() {
   } else {
 
 
+  
+
+    const escapeName = (name: any) => `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, '-');
+
   Promise.all([
     fetch('/index.html').then(response => response.text()),
     fetch('/style.css').then(response => response.text())
   ]).then(([html, css]) => {
+
+
+
+    
     const editor =  grapesjs.init({
           container: '#gjs',
           components:  `
@@ -67,13 +78,14 @@ function WebBuilder() {
          //  },
          canvas: {
           styles: [
+            
             // 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'
           ],
           scripts: [
             'https://code.jquery.com/jquery-3.3.1.slim.min.js',
             'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
             // 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js',
-            'https://cdn.skypack.dev/grapesjs-blocks-bootstrap5'
+            'https://unpkg.com/grapesjs-tailwind'
           ],
           
         },
@@ -86,6 +98,8 @@ function WebBuilder() {
             // storeHtml: true,
             // storeCss: true,
           },
+          selectorManager: { escapeName },
+
           deviceManager: {
             devices:
             [
@@ -183,9 +197,14 @@ editor.Commands.add('export-template', (editor, sender) => {
       saveAs(blob, 'template.zip');
     });
 });
+
+
+if(editor){
+  setIsLoading(false);
+}
       });
 
-
+ 
     }
 
 
@@ -203,6 +222,13 @@ editor.Commands.add('export-template', (editor, sender) => {
  },[])
 
  return (
+
+  
+    isLoading ?   <div className="flex items-center align-middle justify-center w-[100vw] h-[100vh]">
+      <BeatLoader color="#36d7b7" size={48} />
+      </div>  :
+  
+
    <div id="gjs">
 
     
