@@ -98,7 +98,7 @@ function WebBuilder() {
             // storeHtml: true,
             // storeCss: true,
           },
-          selectorManager: { escapeName },
+          // selectorManager: { escapeName },
 
           deviceManager: {
             devices:
