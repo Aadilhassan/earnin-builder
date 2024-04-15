@@ -49,7 +49,9 @@ function WebBuilder() {
   ]).then(([html, css]) => {
 
 
-
+    // if(editor){
+      setIsLoading(false);
+    // }
     
     const editor =  grapesjs.init({
           container: '#gjs',
@@ -132,6 +134,8 @@ function WebBuilder() {
          //    },
          //  }
         })
+
+
         editor.Panels.addPanel({
           id: 'options',
           el: '.panel__right',
@@ -199,9 +203,7 @@ editor.Commands.add('export-template', (editor, sender) => {
 });
 
 
-if(editor){
-  setIsLoading(false);
-}
+
       });
 
  
