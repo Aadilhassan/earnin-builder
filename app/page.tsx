@@ -228,7 +228,7 @@ editor.Commands.add('export-template', (editor, sender) => {
   <>
 
   {
-  isLoading &&  <div className="flex items-center align-middle justify-center w-[100vw] h-[100vh]">
+  isLoading &&  <div className="flex items-center align-middle justify-center w-[100vw] h-[100vh] max-h-[100vh]">
   <BeatLoader color="#36d7b7" size={48} />
   </div> 
   }
