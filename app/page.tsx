@@ -74,7 +74,7 @@ function WebBuilder() {
           width: '100%',
           panels: { defaults: [] },
           
-          plugins: [ grapesjsPresetWebpage, pluginTailwind ],
+          plugins: [ grapesjsPresetWebpage, pluginTailwind, plugin ],
          //  pluginsOpts: {
          //    [plugin]: { /* options */ }
          //  },
